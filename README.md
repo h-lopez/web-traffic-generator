@@ -2,6 +2,8 @@
 
 A quick and dirty HTTP/S "organic" traffic generator.
 
+forked from github [ReconInfoSec/web-traffic-generator](https://github.com/ReconInfoSec/web-traffic-generator/)
+
 ## About
 
 Just a simple (poorly written) Python script that aimlessly "browses" the internet by starting at pre-defined `ROOT_URLS` and randomly "clicking" links on pages until the pre-defined `MAX_DEPTH` is met.
@@ -35,26 +37,20 @@ radomly selected between MIN_DEPTH and MAX_DEPTH.
 - `userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3).......'` You guessed it, the user-agent our headless browser hands over to the web server. You can probably leave it set to the default, but feel free to change it. I would strongly suggest using a common/valid one or else you'll likely get rate-limited quick.
 
 ## Dependencies
-
-Only thing you need and *might* not have is `requests`. Grab it with
+Install dependencies:
 
 ```bash
-sudo pip install requests
+pip3 install -r requirements.txt
 ```
 
 ## Usage
+This code has been modified to run as a systemd service.
 
-Create your config file first:
+1. clone this repository
+1. from the the `systemd` directory, copy the file `nitel-webgen.service` to /etc/systemd/system (`sudo cp systemd/nitel-webgen.service /etc/systemd/system`)
+1. reload systmed (`sudo systemctl daemon-reload`)
+1. enable/start the service (`sudo systemctl enable --now book-scraper`)
 
-```bash
-cp config.py.template config.py
-```
-
-Run the generator:
-
-```bash
-python gen.py
-```
 
 ## Troubleshooting and debugging
 
