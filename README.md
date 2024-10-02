@@ -39,7 +39,7 @@ radomly selected between MIN_DEPTH and MAX_DEPTH.
 ## Dependencies
 Install dependencies:
 
-requests library can be installed via package manager:
+requests library can be installed via package manager (preferred):
 ```bash
 # debian-based distros
 sudo apt install python3 python3-requests
