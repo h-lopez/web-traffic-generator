@@ -65,7 +65,7 @@ This code has been modified to run as a systemd service.
 1. clone this repository to the `/opt` directory
 1. from the the `systemd` directory, copy the file `nitel-webgen.service` to /etc/systemd/system (`sudo cp systemd/nitel-webgen.service /etc/systemd/system`)
 1. reload systmed (`sudo systemctl daemon-reload`)
-1. enable/start the service (`sudo systemctl enable --now book-scraper`)
+1. enable/start the service (`sudo systemctl enable --now nitel-webgen`)
 
 
 ## Troubleshooting and debugging
