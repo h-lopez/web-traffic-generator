@@ -1,7 +1,7 @@
 MAX_DEPTH = 5  # maximum click depth
 MIN_DEPTH = 2 # minimum click depth
-MAX_WAIT = 10  # maximum amount of time to wait between HTTP requests
-MIN_WAIT = 5  # minimum amount of time allowed between HTTP requests
+MAX_WAIT = 60  # maximum amount of time to wait between HTTP requests
+MIN_WAIT = 15  # minimum amount of time allowed between HTTP requests
 DEBUG = False  # set to True to enable useful console output
 
 # use this single item list to test how a site responds to this crawler
