@@ -1,0 +1,13 @@
+[Unit]
+Description=Script that generates dummy web traffic
+After=syslog.target network.target
+
+[Service]
+WorkingDirectory=/opt/web/web-traffic-generator
+ExecStart=/usr/bin/python3 /opt/web-traffic-generator/gen.py
+
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
