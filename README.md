@@ -39,14 +39,30 @@ radomly selected between MIN_DEPTH and MAX_DEPTH.
 ## Dependencies
 Install dependencies:
 
+requests library can be installed via package manager:
 ```bash
+# debian-based distros
+sudo apt install python3 python3-requests
+
+# rhel-based distros
+sudo dnf install python3 python3-requests
+```
+
+or via pip3:
+```bash
+# debian-based distros
+sudo apt intsall python3-pip
+
+# rhel-based distros
+sudo dnf install python3-pip
+
 pip3 install -r requirements.txt
 ```
 
 ## Usage
 This code has been modified to run as a systemd service.
 
-1. clone this repository
+1. clone this repository to the `/opt` directory
 1. from the the `systemd` directory, copy the file `nitel-webgen.service` to /etc/systemd/system (`sudo cp systemd/nitel-webgen.service /etc/systemd/system`)
 1. reload systmed (`sudo systemctl daemon-reload`)
 1. enable/start the service (`sudo systemctl enable --now book-scraper`)
