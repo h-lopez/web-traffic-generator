@@ -17,7 +17,7 @@ import random
 try:
     import config
 except ImportError:
-    
+
     class ConfigClass:  # minimal config incase you don't have the config.py
         MAX_DEPTH = 10  # dive no deeper than this for each root URL
         MIN_DEPTH = 3   # dive at least this deep into each root URL
