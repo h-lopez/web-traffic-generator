@@ -78,7 +78,16 @@ def do_request(url):
 
     debug_print("  Requesting page...".format(url))
 
-    headers = {'user-agent': config.USER_AGENT}
+    # if the USER_AGENT variable is a list, pick a random one
+    if isinstance(config.USER_AGENT, list):
+        temp_user_agent = random.choice(config.USER_AGENT)
+    # otherwise pass along the variable normally (legacy behavior)
+    else:
+        temp_user_agent = config.USER_AGENT
+
+    debug_print("  User Agent: {}".format(hr_bytes(temp_user_agent)))
+
+    headers = {'user-agent': temp_user_agent}
 
     try:
         r = requests.get(url, headers=headers, timeout=5)
