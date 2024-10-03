@@ -346,10 +346,10 @@ blacklist = [
 	]
 
 # must use a valid user agent or sites will hate you
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.127 Safari/537.36'
+# USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.127 Safari/537.36'
 
 # allow multiple user agents
-USER_AGENTS = [
+USER_AGENT = [
     # firefox on windows
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0',
     # firefox on linux
