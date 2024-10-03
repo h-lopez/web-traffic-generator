@@ -85,7 +85,7 @@ def do_request(url):
     else:
         temp_user_agent = config.USER_AGENT
 
-    debug_print("  User Agent: {}".format(hr_bytes(temp_user_agent)))
+    debug_print("  User Agent: {}".format(temp_user_agent))
 
     headers = {'user-agent': temp_user_agent}
 
