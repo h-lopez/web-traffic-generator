@@ -69,7 +69,7 @@ def hr_bytes(bytes_, suffix='B', si=False):
     return "{:.1f}{}{}".format(bytes_, 'Y', suffix)
 
 
-def do_request(url):
+def do_request(url, user_agent = config.USER_AGENT):
     """ A method which loads a page """
 
     global data_meter
@@ -78,16 +78,7 @@ def do_request(url):
 
     debug_print("  Requesting page...".format(url))
 
-    # if the USER_AGENT variable is a list, pick a random one
-    if isinstance(config.USER_AGENT, list):
-        temp_user_agent = random.choice(config.USER_AGENT)
-    # otherwise pass along the variable normally (legacy behavior)
-    else:
-        temp_user_agent = config.USER_AGENT
-
-    debug_print("  User Agent: {}".format(temp_user_agent))
-
-    headers = {'user-agent': temp_user_agent}
+    headers = {'user-agent': user_agent}
 
     try:
         r = requests.get(url, headers=headers, timeout=5)
@@ -140,9 +131,18 @@ def recursive_browse(url, depth):
     debug_print(
         "Recursively browsing [{}] ~~~ [depth = {}]".format(url, depth))
 
+    # if the USER_AGENT variable is a list, pick a random one
+    if isinstance(config.USER_AGENT, list):
+        session_user_agent = random.choice(config.USER_AGENT)
+    # otherwise pass along the variable normally (legacy behavior)
+    else:
+        session_user_agent = config.USER_AGENT
+
+    debug_print("  Session User Agent: {}".format(session_user_agent))
+
     if not depth:  # base case: depth of zero, load page
 
-        do_request(url)
+        do_request(url, session_user_agent)
         return
 
     else:  # recursive case: load page, browse random link, decrement depth
