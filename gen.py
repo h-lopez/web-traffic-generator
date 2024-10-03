@@ -39,8 +39,7 @@ except ImportError:
         ]
 
         # must use a valid user agent or sites will hate you
-        USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) ' \
-            'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+        USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
     config = ConfigClass
 
 
@@ -147,7 +146,7 @@ def recursive_browse(url, depth):
 
     else:  # recursive case: load page, browse random link, decrement depth
 
-        page = do_request(url)  # load current page
+        page = do_request(url, session_user_agent)  # load current page
 
         # give up if error loading page
         if not page:
