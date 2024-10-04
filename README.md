@@ -51,7 +51,7 @@ sudo dnf install python3 python3-requests python3-pil
 or via pip3:
 ```bash
 # debian-based distros
-sudo apt intsall python3-pip
+sudo apt install python3-pip
 
 # rhel-based distros
 sudo dnf install python3-pip
