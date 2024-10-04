@@ -9,7 +9,6 @@ DEBUG = True    # set to True to enable useful console output
 #ROOT_URLS = ['https:///digg.com/']
 
 ROOT_URLS = [
-    'https://google.com',
     'https://youtube.com',
     'https://facebook.com',
     'https://yahoo.com',
