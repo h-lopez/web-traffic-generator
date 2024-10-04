@@ -42,10 +42,10 @@ Install dependencies:
 requests library can be installed via package manager (preferred):
 ```bash
 # debian-based distros
-sudo apt install python3 python3-requests python3-pil
+sudo apt install python3 python3-requests python3-bs4
 
 # rhel-based distros
-sudo dnf install python3 python3-requests python3-pil
+sudo dnf install python3 python3-requests python3-bs4
 ```
 
 or via pip3:
