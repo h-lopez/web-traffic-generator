@@ -10,10 +10,13 @@
 # 20170714 shyft ADDED python 2.7 and 3.x compatibility and generic config
 # 20200225 rarawls ADDED recursive, depth-first browsing, color stdout
 from __future__ import print_function
+from bs4 import BeautifulSoup
+
 import requests
 import re
 import time
 import random
+
 try:
     import config
 except ImportError:
@@ -89,9 +92,6 @@ def do_request(url, user_agent = config.USER_AGENT):
     page_size = len(r.content)
     data_meter += page_size
 
-    debug_print("  Page size: {}".format(hr_bytes(page_size)))
-    debug_print("  Data meter: {}".format(hr_bytes(data_meter)))
-
     status = r.status_code
 
     if (status != 200):
@@ -107,6 +107,52 @@ def do_request(url, user_agent = config.USER_AGENT):
 
     debug_print("  Good requests: {}".format(good_requests))
     debug_print("  Bad reqeusts: {}".format(bad_requests))
+
+    # once it's determined request was good, proceed with downloading all the content
+    parsed_page = BeautifulSoup(r.content, 'html.parser')
+
+    # tags we give a shit about
+    tags = [
+        'img',
+        # 'script',
+        # 'style',
+    ]
+
+    # find all the tags we care about in the page
+    page_tags = parsed_page.find_all([tags])
+    print(page_tags)
+
+    # we'll hold the urls in this array
+    resource_urls = []
+
+    for tag in page_tags:
+        resource_url = tag.get('src')
+
+        # normalize formatting since html allows relative links
+        if resource_url:
+            if(resource_url.startswith('//')):
+                resource_url = 'https:' + resource_url
+            elif(resource_url.startswith('/')):
+                resource_url = url + resource_url
+            elif(not resource_url.startswith('http')):
+                resource_url = f'{url}/{resource_url}'
+
+            # once normalized, append to resource list
+            resource_urls.append(resource_url)
+
+    debug_print("  Found elements: {}".format(len(resource_urls)))
+
+    for resource_url in resource_urls:
+        try:
+            response = requests.get(resource_url, headers = headers, timeout = 5, stream = True)
+            data_meter += len(response.content)
+            debug_print("  DOWNLOADING: {}".format(resource_url))
+
+        except Exception as error:
+            debug_print("  ERROR: {}".format(error))
+
+    debug_print("  Page size: {}".format(hr_bytes(page_size)))
+    debug_print("  Data meter: {}".format(hr_bytes(data_meter)))
 
     return r
 
