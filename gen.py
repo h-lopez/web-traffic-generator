@@ -12,10 +12,13 @@
 from __future__ import print_function
 from bs4 import BeautifulSoup
 
+import asyncio
+import aiohttp
+
+import random
 import requests
 import re
 import time
-import random
 
 try:
     import config
@@ -70,6 +73,29 @@ def hr_bytes(bytes_, suffix='B', si=False):
         bytes_ /= bits
     return "{:.1f}{}{}".format(bytes_, 'Y', suffix)
 
+async def download_resource(session, resource_url):
+    """
+    downloads files asyncronously
+    """
+    try:
+        async with session.get(resource_url) as response:
+            if response.status == 200:
+                # Discard content after fetching
+                _ = await response.read()
+                # print(f'Successfully downloaded: {resource_url}')
+    except Exception as err:
+        pass
+        # print(f'error downloading {resource_url}: {err}')
+
+async def download_resources_async(resource_urls):
+    """
+    asyncio entry point to create task(s) and schedule downloads
+    """
+    # Asynchronously download all resources
+    async with aiohttp.ClientSession() as session:
+        tasks = [download_resource(session, resource_url) for resource_url in resource_urls]
+        await asyncio.gather(*tasks)
+
 
 def do_request(url, user_agent = config.USER_AGENT):
     """ A method which loads a page """
@@ -120,7 +146,6 @@ def do_request(url, user_agent = config.USER_AGENT):
 
     # find all the tags we care about in the page
     page_tags = parsed_page.find_all([tags])
-    print(page_tags)
 
     # we'll hold the urls in this array
     resource_urls = []
@@ -142,6 +167,8 @@ def do_request(url, user_agent = config.USER_AGENT):
 
     debug_print("  Found elements: {}".format(len(resource_urls)))
 
+    # too slow, swapped out with asyncio implementation
+    '''
     for resource_url in resource_urls:
         try:
             response = requests.get(resource_url, headers = headers, timeout = 5, stream = True)
@@ -150,6 +177,11 @@ def do_request(url, user_agent = config.USER_AGENT):
 
         except Exception as error:
             debug_print("  ERROR: {}".format(error))
+    '''
+
+    # one issue with asyncio implementation is that i cant get it to reliably grab filesizes of what it retrieves...
+    # oh well,
+    asyncio.run(download_resources_async(resource_urls))
 
     debug_print("  Page size: {}".format(hr_bytes(page_size)))
     debug_print("  Data meter: {}".format(hr_bytes(data_meter)))
