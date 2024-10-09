@@ -10,6 +10,8 @@ DEBUG = True    # set to True to enable useful console output
 
 ROOT_URLS = [
     'http://fs.acme.corp',
+    # fs.acme.corp hosts sftpgo on port 8080 in addition to nginx port 80
+    'http://fs.acme.corp:8080',
     'http://nms.acme.corp',
     'http://speed.acme.corp',
 	]
