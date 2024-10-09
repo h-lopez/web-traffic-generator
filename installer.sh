@@ -6,9 +6,11 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+# script expects to tool to be installed to /opt/web-traffic-generator/
+
 # copy systemd files
-cp systemd/webgen-ext.service /etc/systemd/system/
-cp systemd/webgen-int.service /etc/systemd/system/
+cp /opt/web-traffic-generator/systemd/webgen-ext.service /etc/systemd/system/
+cp /opt/web-traffic-generator/systemd/webgen-int.service /etc/systemd/system/
 
 systemctl daemon-reload
 
