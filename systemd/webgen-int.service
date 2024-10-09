@@ -4,7 +4,7 @@ After=syslog.target network.target
 
 [Service]
 WorkingDirectory=/opt/web-traffic-generator
-ExecStart=/usr/bin/python3 /opt/web-traffic-generator/gen.py
+ExecStart=/usr/bin/python3 /opt/web-traffic-generator/gen.py /opt/web-traffic-generator/config/internal.py
 Restart=always
 RestartSec=30
 
