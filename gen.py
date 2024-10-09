@@ -20,8 +20,27 @@ import requests
 import re
 import time
 
+import sys
+import os
+import importlib.util
+
 try:
-    import config
+    # import config
+
+    # new implementation expects a file to be passed via command-line argument
+    # tool then loads that file as the config and is passed along to the rest of the code
+
+    # get file name from command line argument
+    file_path = sys.argv[1]
+    module_name = os.path.splitext(os.path.basename(file_path))[0]
+
+    # load file and import it as config
+    spec = importlib.util.spec_from_file_location(module_name, file_path)
+    config = importlib.util.module_from_spec(spec)
+
+    # makes config module available to the rest of the tool
+    spec.loader.exec_module(config)
+
 except ImportError:
 
     class ConfigClass:  # minimal config incase you don't have the config.py
@@ -47,6 +66,9 @@ except ImportError:
         # must use a valid user agent or sites will hate you
         USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
     config = ConfigClass
+except Exception as err:
+    print(err)
+    exit()
 
 
 class Colors:
