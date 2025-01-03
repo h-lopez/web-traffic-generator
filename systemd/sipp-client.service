@@ -1,0 +1,12 @@
+[Unit]
+Description=starts sipp server instance
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/sipp
+ExecStart=/usr/bin/sipp voip.acme.corp -sf /opt/sipp/uac.xml -l 5 -r 1
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

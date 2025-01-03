@@ -1,0 +1,11 @@
+[Unit]
+Description=starts sipp server instance
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/sipp -sn uas -mi 10.0.10.105 -rtp_echo
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
